@@ -1,22 +1,28 @@
 #+title: Readme
 
-* Run docker
-1. Build image
+* Run docker from
+1. Clone the repository
+   #+begin_src bash
+git clone https://github.com/spynets/rater
+cd rater
+   #+end_src
+
+2. Build image
    #+begin_src bash
    sudo docker buildx build -t rater .
    #+end_src
 
-2. Start the container
+3. Start the container
    #+begin_src bash
    sudo docker run -d --name rater_container -p 80:8000 rater
    #+end_src
 
-3. Migrate database
+4. Migrate database
    #+begin_src bash
    sudo docker exec -it rater_container rater
    #+end_src
 
-  [[http:localhost:80][Website]]
+  No just go to [[http:localhost:80][localhost:80]] and begin!
 
 * [ ] Add charts
  1. Types of Graphs
