@@ -1,5 +1,23 @@
 #+title: Readme
 
+* Run docker
+1. Build image
+   #+begin_src bash
+   sudo docker buildx build -t rater .
+   #+end_src
+
+2. Start the container
+   #+begin_src bash
+   sudo docker run -d --name rater_container -p 80:8000 rater
+   #+end_src
+
+3. Migrate database
+   #+begin_src bash
+   sudo docker exec -it rater_container rater
+   #+end_src
+
+  [[http:localhost:80][Website]]
+
 * [ ] Add charts
  1. Types of Graphs
     a. Radar Chart (Spider Chart)
