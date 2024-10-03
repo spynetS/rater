@@ -19,7 +19,7 @@ cd rater
 
 4. Migrate database
    #+begin_src bash
-   sudo docker exec -it rater_container rater
+	sudo docker exec -it rater_container python /app/manage.py migrate
    #+end_src
 
   No just go to [[http:localhost:80][localhost:80]] and begin!
