@@ -1,0 +1,15 @@
+<!-- You can open the modal using ID.showModal() method -->
+<input type="checkbox" id="my_modal_6" class="modal-toggle" checked/>
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Register new movie for all users</h3>
+    <p class="py-4">This modal works with a hidden checkbox!</p>
+	<form hx-post="/movie/open/search/">
+		<input name="title"  />
+		<input type="submit" value="Search" />
+	</form>
+    <div class="modal-action">
+      <label for="my_modal_6" class="btn">Close!</label>
+    </div>
+  </div>
+</div>

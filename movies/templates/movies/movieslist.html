@@ -1,0 +1,16 @@
+{% for movie in movies %}
+	<form
+		hx-post="/rating/setmovie/{{rating.pk}}/"
+		hx-vals='{"movie":{{movie.pk}}}'
+		hx-trigger='click'
+		hx-swap='outerHTML'
+		hx-target='#values'
+	>
+			<div name='{{movie.pk}}' class="flex flex-col items-center w-fit h-56" >
+				<img class="h-56 rounded-lg" src="{{movie.poster}}" alt="poster" />
+				<p>{{movie.title}}</p>
+				<p>9/10</p>
+			</div>
+
+	</form>
+{% endfor %}

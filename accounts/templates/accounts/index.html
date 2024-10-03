@@ -1,0 +1,46 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+<div class="w-full h-screen  p-12" >
+	<div class="w-full flex flex-row justify-between" >
+		<a href="add" class="btn btn-primary">
+			Add new rating
+		</a>
+	</div>
+	<table class="table table-zebra">
+		<!-- head -->
+		<thead>
+		<tr>
+			<th></th>
+			<th>Poster</th>
+			<th>Movie title</th>
+			<th>Look</th>
+			<th>Script</th>
+			<th>Acting</th>
+			<th>Soundtrack</th>
+			<th>Bonus</th>
+			<th>Overalscore</th>
+			<th>Description</th>
+			<th>Sum</th>
+		</tr>
+		</thead>
+		<tbody>
+			{% for rating in ratings %}
+			<tr class="hover" >
+				<th>{{rating.pk}}</th>
+				<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
+				<td>{{rating.movie.title}}</td>
+				<td>{{rating.look}}</td>
+				<td>{{rating.script}}</td>
+				<td>{{rating.acting}}</td>
+				<td>{{rating.soundtrack}}</td>
+				<td>{{rating.bonus}}</td>
+				<td>{{rating.overalscore}}</td>
+				<td class="truncate">{{rating.description}}</td>
+				<td>{{rating.average}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+	<div class="flex flex-col w-full gap-12" >
+		{{rating.pk}}
+		<div class="bg-base-200 p-12 rounded-lg flex flex-col gap-2" >
+			<div class="" >
+				<form hx-post="/rating/movielist/{{rating.pk}}/" hx-trigger="input delay:500ms" hx-target='#holder'>
+					<h2>Select the movie to be reviews</h2>
+					{% include "searchbar.html" %}
+				</form>
+			</div>
+			<div id="holder" class="flex flex-row justify-center">
+			</div>
+		</div>
+		<form
+			class="bg-base-200 p-12 grid grid-cols-2 gap-4 rounded-lg"
+			hx-post="/rating/setvalues/{{rating.pk}}/"
+			id='values'
+		>
+			<input disabled name="look"        placeholder="Cinematic look" class="input input-bordered w-full max-w-xs" />
+			<input disabled name="script"      placeholder="Script" class="input input-bordered w-full max-w-xs" />
+			<input disabled name="acting"      placeholder="Acting" class="input input-bordered w-full max-w-xs" />
+			<input disabled name="soundtrack"  placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
+			<input disabled name="bonus" 	  placeholder="Bonus score" class="input input-bordered w-full max-w-xs" />
+			<input disabled name="overalscore" placeholder="The overalscore" class="input input-bordered w-full max-w-xs" />
+
+			<textarea disabled class="textarea textarea-bordered col-span-2" name="description" rows="" cols="" placeholder="Description"></textarea>
+			<input disabled type="submit" value="Submit" class="btn btn-primary col-span-2" />
+
+		</form>
+	</div>
+{% endblock %}

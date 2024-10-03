@@ -1,0 +1,19 @@
+#+title: Readme
+
+* [ ] Add charts
+ 1. Types of Graphs
+ a. Radar Chart (Spider Chart)
+ Description: This chart is excellent for showing the ratings of different aspects (look, script, acting, soundtrack) for each movie. Each axis represents a different criterion, allowing users to see how a movie performs across multiple dimensions.
+ Use Case: Perfect for quick comparisons between movies.
+ b. Bar Chart
+ Description: A simple and effective way to show average ratings for each criterion across all movies. You can use grouped bar charts to compare multiple movies against each criterion.
+ Use Case: Useful for visualizing trends in ratings over time or across different movies.
+ c. Pie Chart
+ Description: Use pie charts to show the percentage distribution of total ratings across different movies or to depict how many ratings each criterion received.
+ Use Case: Good for illustrating proportions, such as the overall rating breakdown of a single movie.
+ d. Line Chart
+ Description: Useful for showing how the ratings change over time. You can track a specific movie's rating trends for each aspect across multiple user submissions.
+ Use Case: Great for understanding how a movie's reception evolves after its release.
+ e. Heatmap
+ Description: A heatmap can display the correlation between different criteria. For example, you can show how the rating of acting relates to the rating of the script.
+ Use Case: Excellent for in-depth analysis and discovering relationships between different criteria.
