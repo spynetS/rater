@@ -24,4 +24,5 @@ from movies import views as views
 urlpatterns = [
     path('search/', views.search),
     path('register/<str:title>', views.register_model),
+    path('director/<str:director>',views.director_page),
 ]

@@ -29,5 +29,6 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('logout', LogoutView.as_view(), name='logout'),
     path('settings', views.settings, name='settings'),
+    path('settheme/<int:account_id>/', views.settheme, name='settheme'),
 
 ]

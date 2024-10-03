@@ -1,5 +1,6 @@
 from django.contrib.auth.views import login_required
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import CustomLoginForm
@@ -10,6 +11,41 @@ from .models import Account
 # Create your views here.
 from rating.models import Rating
 from .forms import CustomSignUpForm
+
+themes = [
+    "light",
+    "dark",
+    "cupcake",
+    "bumblebee",
+    "emerald",
+    "corporate",
+    "synthwave",
+    "retro",
+    "cyberpunk",
+    "valentine",
+    "halloween",
+    "garden",
+    "forest",
+    "aqua",
+    "lofi",
+    "pastel",
+    "fantasy",
+    "wireframe",
+    "black",
+    "luxury",
+    "dracula",
+    "cmyk",
+    "autumn",
+    "business",
+    "acid",
+    "lemonade",
+    "night",
+    "coffee",
+    "winter",
+    "dim",
+    "nord",
+    "sunset",
+]
 
 @login_required
 def index(request):
@@ -57,4 +93,11 @@ def signup_view(request):
     return render(request, 'accounts/signup.html', {'form': form})
 
 def settings(request):
-    return render(request,"accounts/settings.html",{})
+    return render(request,"accounts/settings.html",{'themes':themes})
+
+@login_required
+def settheme(request,account_id):
+    account = get_object_or_404(Account,pk=account_id)
+    account.theme = request.POST['theme']
+    account.save()
+    return HttpResponse("sucess")

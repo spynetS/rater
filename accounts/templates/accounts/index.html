@@ -1,6 +1,6 @@
 {% extends 'accounts/base.html' %}
 {% block content %}
-<div class="w-full h-screen  p-12" >
+<div class="w-full min-h-screen  p-12 flex flex-col" >
 	<div class="w-full flex flex-row justify-between" >
 		<a href="add" class="btn btn-primary">
 			Add new rating
@@ -13,6 +13,7 @@
 			<th></th>
 			<th>Poster</th>
 			<th>Movie title</th>
+			<th>Director</th>
 			<th>Look</th>
 			<th>Script</th>
 			<th>Acting</th>
@@ -29,6 +30,10 @@
 				<th>{{rating.pk}}</th>
 				<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
 				<td>{{rating.movie.title}}</td>
+				<td>
+					<a href="/movie/director/{{rating.movie.director.name}}"
+					   class='link'>{{rating.movie.director.name}}</a>
+				</td>
 				<td>{{rating.look}}</td>
 				<td>{{rating.script}}</td>
 				<td>{{rating.acting}}</td>
@@ -41,6 +46,36 @@
 			{% endfor %}
 		</tbody>
 	</table>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
 </div>
 
 {% endblock %}
