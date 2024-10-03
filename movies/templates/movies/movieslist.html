@@ -1,16 +1,18 @@
 {% for movie in movies %}
 	<form
-		hx-post="/rating/setmovie/{{rating.pk}}/"
-		hx-vals='{"movie":{{movie.pk}}}'
+		hx-post="/movie/register/{{request.session.current_rating}}/"
+		hx-vals='{"movie":{{  movie.json }}}'
 		hx-trigger='click'
-		hx-swap='outerHTML'
-		hx-target='#values'
+		hx-swap='innerHTML'
+		hx-target='#holder'
 	>
-			<div name='{{movie.pk}}' class="flex flex-col items-center w-fit h-56" >
-				<img class="h-56 rounded-lg" src="{{movie.poster}}" alt="poster" />
-				<p>{{movie.title}}</p>
-				<p>9/10</p>
+		{% if movie.pk %}
+		{% else %}
+			<div  class="flex flex-col items-center w-fit h-56" >
+				<img class="h-56 rounded-lg" src="{{movie.Poster}}" alt="poster" />
+				<p>{{movie.Title}}</p>
 			</div>
+		{% endif %}
 
 	</form>
 {% endfor %}

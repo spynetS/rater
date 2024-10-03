@@ -23,6 +23,7 @@ from movies import views as views
 
 urlpatterns = [
     path('search/', views.search),
-    path('register/<str:title>', views.register_model),
+    path('register/<int:rating_id>/', views.register_movie),
+    path('search_api/', views.search_api),
     path('director/<str:director>',views.director_page),
 ]

@@ -9,12 +9,12 @@ from datetime import timedelta
 # Create your models here.
 
 class Rating(models.Model):
-    look = models.IntegerField(null=True)
-    script = models.IntegerField(null=True)
-    acting = models.IntegerField(null=True)
-    soundtrack = models.IntegerField(null=True)
-    bonus = models.IntegerField(null=True)
-    overalscore = models.IntegerField(null=True)
+    look        = models.DecimalField(decimal_places=2,max_digits=4,null=True)
+    script      = models.DecimalField(decimal_places=2,max_digits=4,null=True)
+    acting      = models.DecimalField(decimal_places=2,max_digits=4,null=True)
+    soundtrack  = models.DecimalField(decimal_places=2,max_digits=4,null=True)
+    bonus       = models.DecimalField(decimal_places=2,max_digits=4,null=True)
+    overalscore = models.DecimalField(decimal_places=2,max_digits=4,null=True)
     description = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)  # Automatically set at creation

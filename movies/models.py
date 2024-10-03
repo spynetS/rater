@@ -7,5 +7,8 @@ class Person(models.Model):
 class Movie(models.Model):
     title =    models.TextField()
     poster =   models.TextField()
+
+    imdbID =   models.TextField()
+
     director = models.ForeignKey(Person,on_delete=models.CASCADE,related_name='directed_movies',null=True)
     writer =   models.ForeignKey(Person,on_delete=models.CASCADE,related_name='writen_movies',null=True)

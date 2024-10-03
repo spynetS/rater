@@ -57,6 +57,7 @@ def add(request):
     rating = Rating(user=request.user)
     rating.save()
     request.session['current_rating'] = rating.pk
+    print("Current Rating ID:", request.session['current_rating'])
 
     return render(request,"accounts/add.html",{'rating':rating})
 

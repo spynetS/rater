@@ -1,73 +1,22 @@
-{% extends 'accounts/base.html' %}
-{% block content %}
-<div class="w-full min-h-screen  p-12 flex flex-col" >
-
-	<div class="w-full flex flex-row justify-between" >
-		<form
-			hx-post="/rating/search/"
-			hx-target="tbody"
-			hx-trigger='input delay:500ms'
-			hx-indicator="#spinner"
-		>
-			{% include "searchbar.html"  %}
-		</form>
-		<a href="add" class="btn btn-primary">
-			Add new rating
-		</a>
-	</div>
-	<table id="myTable" class="table table-zebra">
-		<!-- head -->
-		<thead>
-		<tr>
-			<th></th>
-			<th onclick="sortTable(1)" >Poster</th>
-			<th onclick="sortTable(2)" >Movie title</th>
-			<th onclick="sortTable(3)" >Director</th>
-			<th onclick="sortTable(4)" >Look</th>
-			<th onclick="sortTable(5)" >Script</th>
-			<th onclick="sortTable(6)" >Acting</th>
-			<th onclick="sortTable(7)" >Soundtrack</th>
-			<th onclick="sortTable(8)" >Bonus</th>
-			<th onclick="sortTable(9)" >Overalscore</th>
-			<th onclick="sortTable(10)" >Description</th>
-			<th onclick="sortTable(11)">Sum</th>
-		</tr>
-		</thead>
-		<tbody>
-			{% include "rating/ratings_rows.html" with ratings=ratings %}
-		</tbody>
-		{% include "spinner.html" %}
-	</table>
-
-<div class='hidden' >
-  <canvas id="myChart"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-
+{% for rating in ratings %}
+<tr class="hover" >
+	<th>{{rating.pk}}</th>
+	<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
+	<td>{{rating.movie.title}}</td>
+	<td>
+		<a href="/movie/director/{{rating.movie.director.name}}"
+			class='link'>{{rating.movie.director.name}}</a>
+	</td>
+	<td>{{rating.look}}</td>
+	<td>{{rating.script}}</td>
+	<td>{{rating.acting}}</td>
+	<td>{{rating.soundtrack}}</td>
+	<td>{{rating.bonus}}</td>
+	<td>{{rating.overalscore}}</td>
+	<td class="truncate">{{rating.description}}</td>
+	<td>{{rating.average}}</td>
+</tr>
+{% endfor %}
 
 <script>
 // Function to sort the table by a specific column
@@ -119,7 +68,3 @@ function sortTable(columnIndex) {
     }
 }
 </script>
-
-</div>
-
-{% endblock %}

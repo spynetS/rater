@@ -22,7 +22,9 @@ from django.views.generic.base import TemplateView
 from rating import views as views
 
 urlpatterns = [
-    path('setmovie/<int:rating_id>/',views.setmovie),
+    path('setmovie/<int:rating_id>/<int:movie_id>/',views.setmovie),
     path('movielist/<int:rating_id>/',views.movielist),
     path('setvalues/<int:rating_id>/',views.setvalues),
+    path('search/',views.search),
+
 ]

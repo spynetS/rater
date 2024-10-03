@@ -1,15 +1,16 @@
+from email import header
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from movies.models import Movie
 from rating.models import Rating
 
 # Create your views here.
 
-def setmovie(request,rating_id):
+def setmovie(request,rating_id,movie_id):
     rating = get_object_or_404(Rating,pk=rating_id)
-    rating.movie = get_object_or_404(Movie,pk=int(request.POST['movie']))
+    rating.movie = get_object_or_404(Movie,pk=movie_id)
     rating.save()
     return render(request,"rating/values.html",{"rating":rating})
 
@@ -33,7 +34,15 @@ def setvalues(request,rating_id):
     rating.description = request.POST['description']
     rating.save()
     movies = Movie.objects.all()
-    return render(request,"movies/movieslist.html",{'rating':rating,'movies':movies})
+    response = HttpResponse()
+    response['HX-Redirect'] = '/account/'  # Set the redirect URL in the header
+
+    return response  # Return the response to the HTMX request
 
 def values(request,rating_id):
     return render(request,"rating/values.html",{"rating":get_object_or_404(Rating,pk=rating_id)})
+
+@login_required
+def search(request):
+    ratings = Rating.objects.filter(user=request.user,movie__title__icontains=request.POST['search']).order_by("-overalscore")
+    return render(request,'rating/ratings_rows.html',{'ratings':ratings})

@@ -9,6 +9,13 @@
 			<th></th>
 			<th>Poster</th>
 			<th>Movie title</th>
+			<th>Average Look</th>
+			<th>Average Script</th>
+			<th>Average Acting</th>
+			<th>Average Soundtrack</th>
+			<th>Average Overalscore</th>
+			<th>Average Bonus</th>
+			<th>Avrage Sum</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -17,6 +24,13 @@
 				<th>{{movie.pk}}</th>
 				<th><img src="{{movie.poster}}" alt="" class="w-12 h-12" /></th>
 				<td>{{movie.title}}</td>
+				<td>{{movie.avg_look}}</td>
+				<td>{{movie.avg_script}}</td>
+				<td>{{movie.avg_acting}}</td>
+				<td>{{movie.avg_soundtrack}}</td>
+				<td>{{movie.avg_overalscore}}</td>
+				<td>{{movie.avg_bonus}}</td>
+				<td>{{movie.avg_total}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
