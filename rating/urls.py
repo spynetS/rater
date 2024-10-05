@@ -25,6 +25,7 @@ urlpatterns = [
     path('setmovie/<int:rating_id>/<int:movie_id>/',views.setmovie),
     path('movielist/<int:rating_id>/',views.movielist),
     path('setvalues/<int:rating_id>/',views.setvalues),
+    path('getvalues/<int:rating_id>/',views.values),
     path('search/',views.search),
 
 ]

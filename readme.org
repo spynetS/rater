@@ -14,13 +14,12 @@ cd rater
 
 3. Start the container
    #+begin_src bash
-   sudo docker run -d --name rater_container -p 80:8000 rater
-   #+end_src
-
-4. Migrate database
+. Migrate database
    #+begin_src bash
 	sudo docker exec -it rater_container python /app/manage.py migrate
    #+end_src
+
+   #+RESULTS:
 
   No just go to [[http:localhost:80][localhost:80]] and begin!
 

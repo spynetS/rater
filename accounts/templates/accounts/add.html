@@ -2,8 +2,7 @@
 {% extends 'accounts/base.html' %}
 
 {% block content %}
-	<div class="flex flex-col w-full gap-12" >
-		{{rating.pk}}
+	<div class="flex flex-col w-full gap-12 p-12" >
 		<div class="bg-base-200 p-12 rounded-lg flex flex-col gap-2" >
 			<div class="" >
 				<form hx-post="/movie/search_api/" hx-trigger="input delay:500ms" hx-target='#holder'>
@@ -11,24 +10,14 @@
 					{% include "searchbar.html" %}
 				</form>
 			</div>
-			<div id="holder" class="flex flex-row justify-center">
+			<div id="holder" class="flex flex-wrap justify-center h-72 overflow-scroll">
 			</div>
 		</div>
-		<form
-			class="bg-base-200 p-12 grid grid-cols-2 gap-4 rounded-lg"
-			hx-post="/rating/setvalues/{{rating.pk}}/"
-			id='values'
+		<div
+			class="bg-base-200 p-12 rounded-lg"
+			hx-post="/rating/getvalues/{{rating.pk}}/"
+			hx-trigger="MovieSelected from:body"
 		>
-			<input name="look"        placeholder="Cinematic look" class="input input-bordered w-full max-w-xs" />
-			<input name="script"      placeholder="Script" class="input input-bordered w-full max-w-xs" />
-			<input name="acting"      placeholder="Acting" class="input input-bordered w-full max-w-xs" />
-			<input name="soundtrack"  placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
-			<input name="bonus" 	  placeholder="Bonus score" class="input input-bordered w-full max-w-xs" />
-			<input name="overalscore" placeholder="The overalscore" class="input input-bordered w-full max-w-xs" />
-
-			<textarea class="textarea textarea-bordered col-span-2" name="description" rows="" cols="" placeholder="Description"></textarea>
-			<input type="submit" value="Submit" class="btn btn-primary col-span-2" />
-
-		</form>
+		</div>
 	</div>
 {% endblock %}

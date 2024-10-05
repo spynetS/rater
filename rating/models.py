@@ -28,7 +28,7 @@ class Rating(models.Model):
         super().save(*args, **kwargs)
 
         # Check for existing ratings with null movie and older than 1 hour
-        one_hour_ago = timezone.now() - timedelta(hours=1)
+        one_hour_ago = timezone.now() - timedelta(minutes=20)
         Rating.objects.filter(movie__isnull=True, created_at__lt=one_hour_ago).delete()
 
     def average(self):

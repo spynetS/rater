@@ -54,8 +54,10 @@ def register_movie(request,rating_id):
         movie.save()
         rating.movie = movie
         rating.save()
+    response = render(request,"movies/poster.html",{"movie":movie})
+    response.headers["HX-Trigger"] = "MovieSelected"
+    return response
 
-    return render(request,"movies/poster.html",{"movie":movie})
 from django.db.models import Avg, F, ExpressionWrapper, FloatField
 def director_page(request,director):
     print(director)
@@ -66,7 +68,7 @@ def director_page(request,director):
         avg_script=Avg('rating__script'),
         avg_acting=Avg('rating__acting'),
         avg_soundtrack=Avg('rating__soundtrack'),
-        avg_overalscore=Avg('rating__overalscore'),
+        avg_overalscore=Avg('rating__overalscore ),
         avg_bonus=Avg('rating__bonus'),
         avg_total=Avg(
             ExpressionWrapper(

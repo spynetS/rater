@@ -12,3 +12,6 @@ class Movie(models.Model):
 
     director = models.ForeignKey(Person,on_delete=models.CASCADE,related_name='directed_movies',null=True)
     writer =   models.ForeignKey(Person,on_delete=models.CASCADE,related_name='writen_movies',null=True)
+
+    def __str__(self):
+        return self.title
