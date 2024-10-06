@@ -1,39 +1,40 @@
 {% extends "accounts/base.html" %}
 
 {% block content %}
-	<div class="min-h-screen" >
-	<table class="table table-zebra">
-		<!-- head -->
-		<thead>
-		<tr>
-			<th></th>
-			<th>Poster</th>
-			<th>Movie title</th>
-			<th>Average Look</th>
-			<th>Average Script</th>
-			<th>Average Acting</th>
-			<th>Average Soundtrack</th>
-			<th>Average Overalscore</th>
-			<th>Average Bonus</th>
-			<th>Avrage Sum</th>
-		</tr>
-		</thead>
-		<tbody>
-			{% for movie in movies %}
-			<tr class="hover" >
-				<th>{{movie.pk}}</th>
-				<th><img src="{{movie.poster}}" alt="" class="w-12 h-12" /></th>
-				<td>{{movie.title}}</td>
-				<td>{{movie.avg_look}}</td>
-				<td>{{movie.avg_script}}</td>
-				<td>{{movie.avg_acting}}</td>
-				<td>{{movie.avg_soundtrack}}</td>
-				<td>{{movie.avg_overalscore}}</td>
-				<td>{{movie.avg_bonus}}</td>
-				<td>{{movie.avg_total}}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	<div class="flex flex-col items-center min-h-screen w-full p-12 gap-4" >
+		<h1 class="text-4xl font-bold" >{{director.name}}</h1>
+		<table class="table table-zebra w-1/2">
+			<!-- head -->
+			<thead>
+				<tr>
+					<th></th>
+					<th>Poster</th>
+					<th>Movie title</th>
+					<th>Average Look</th>
+					<th>Average Script</th>
+					<th>Average Acting</th>
+					<th>Average Soundtrack</th>
+					<th>Average Overalscore</th>
+					<th>Average Bonus</th>
+					<th>Avrage Sum</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for movie in movies %}
+					<tr class="hover" >
+						<th>{{movie.pk}}</th>
+						<th><img src="{{movie.poster}}" alt="" class="w-12 h-12" /></th>
+						<td>{{movie.title}}</td>
+						<td>{{movie.avg_look}}</td>
+						<td>{{movie.avg_script}}</td>
+						<td>{{movie.avg_acting}}</td>
+						<td>{{movie.avg_soundtrack}}</td>
+						<td>{{movie.avg_overalscore}}</td>
+						<td>{{movie.avg_bonus}}</td>
+						<td>{{movie.avg_total}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}

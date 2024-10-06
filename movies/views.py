@@ -59,8 +59,8 @@ def register_movie(request,rating_id):
     return response
 
 from django.db.models import Avg, F, ExpressionWrapper, FloatField
+
 def director_page(request,director):
-    print(director)
     director_model = get_object_or_404(Person,name=director)
     movies = director_model.directed_movies.all()
     movie_with_ratings = movies.annotate(
@@ -81,4 +81,4 @@ def director_page(request,director):
     )
     print(movie_with_ratings)
 
-    return render(request,'movies/director.html',{"movies":movie_with_ratings})
+    return render(request,'movies/director.html',{"director":director_model,"movies":movie_with_ratings})
