@@ -26,4 +26,5 @@ urlpatterns = [
     path('register/<int:rating_id>/', views.register_movie),
     path('search_api/', views.search_api),
     path('director/<str:director>',views.director_page),
+    path('movie/<int:movie_id>', views.movie),
 ]

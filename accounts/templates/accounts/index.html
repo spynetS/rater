@@ -38,7 +38,7 @@
 		</tr>
 		</thead>
 		<tbody>
-			{% include "rating/ratings_rows.html" with ratings=ratings %}
+			{% include "rating/ratings_rows.html" with ratings=ratings edit=True description=True%}
 		</tbody>
 		{% include "spinner.html" %}
 	</table>

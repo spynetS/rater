@@ -1,0 +1,43 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+	<div class="flex flex-row w-full relative gap-12 " >
+		<img src="{{movie.poster}}" alt="" />
+		<div class="grid grid-cols-2 absolute left-0 w-full h-screen bg-gradient-to-l from-base-200 via-base-300 to-transparent">
+			<div>
+			</div>
+			<div class=" flex flex-col  gap-3 p-12" >
+				<h1 class="text-4xl font-bold" >{{movie.title}}</h1>
+				<div class="grid grid-cols-2" >
+					<div class="flex flex-col gap-2" >
+						<div class="grid grid-cols-3">
+							<p>Director:</p>
+							<a href="/movie/director/{{movie.director.name}}" class="link col-span-2" >{{movie.director.name}}</a>
+						</div>
+						<div class="grid grid-cols-3">
+							<p>Writer:</p>
+							<a href="/" class="link col-span-2" >{{movie.writer.name}}</a>
+						</div>
+					</div>
+					<div>
+						<div class="mb-2">
+							<p>Average Rating</p>
+							<div class="rating">
+								<input type="radio" name="rating-1" class="mask mask-star" />
+								<input type="radio" name="rating-1" class="mask mask-star" checked="checked" />
+								<input type="radio" name="rating-1" class="mask mask-star" />
+								<input type="radio" name="rating-1" class="mask mask-star" />
+								<input type="radio" name="rating-1" class="mask mask-star" />
+							</div>
+						</div>
+						<p>{{movie.release}}</p>
+
+					</div>
+				</div>
+				<div class="divider"></div>
+				<p>{{movie.plot}}</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

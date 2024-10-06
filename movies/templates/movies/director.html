@@ -10,6 +10,7 @@
 					<th></th>
 					<th>Poster</th>
 					<th>Movie title</th>
+					<th>Movie Director</th>
 					<th>Average Look</th>
 					<th>Average Script</th>
 					<th>Average Acting</th>
@@ -20,20 +21,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for movie in movies %}
-					<tr class="hover" >
-						<th>{{movie.pk}}</th>
-						<th><img src="{{movie.poster}}" alt="" class="w-12 h-12" /></th>
-						<td>{{movie.title}}</td>
-						<td>{{movie.avg_look}}</td>
-						<td>{{movie.avg_script}}</td>
-						<td>{{movie.avg_acting}}</td>
-						<td>{{movie.avg_soundtrack}}</td>
-						<td>{{movie.avg_overalscore}}</td>
-						<td>{{movie.avg_bonus}}</td>
-						<td>{{movie.avg_total}}</td>
-					</tr>
-				{% endfor %}
+				{% include "rating/ratings_rows.html" with ratings=ratings %}
 			</tbody>
 		</table>
 

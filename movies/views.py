@@ -2,6 +2,7 @@ from django.contrib.auth.views import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 import requests
+from datetime import datetime
 import json
 
 from rating.views import setmovie
@@ -46,13 +47,26 @@ def register_movie(request,rating_id):
         director, director_created = Person.objects.get_or_create(name=movie_data["Director"])
         writer, writer_created = Person.objects.get_or_create(name=movie_data["Writer"])
 
+
+
         movie,movie_created = Movie.objects.get_or_create(
             title=movie_data['Title'],
             poster=movie_data['Poster'],
+            release = datetime.strptime(movie_data['Released'],"%d %b %Y"),
+            plot = movie_data['Plot'],
+            imdbRating = float(movie_data['imdbRating']),
+
             director = director,
             writer = writer,
         )
         movie.save()
+
+        actors = movie_data['Actors'].replace('"',"").split(",")
+        for actor in actors:
+            print(actor.strip())
+            actor_model, actor_created = Person.objects.get_or_create(name=actor.strip())
+            movie.actors.add(actor_model)
+
         rating.movie = movie
         rating.save()
     response = render(request,"movies/poster.html",{"movie":movie})
@@ -64,22 +78,23 @@ from django.db.models import Avg, F, ExpressionWrapper, FloatField
 def director_page(request,director):
     director_model = get_object_or_404(Person,name=director)
     movies = director_model.directed_movies.all()
-    movie_with_ratings = movies.annotate(
-        avg_look=Avg('rating__look'),
-        avg_script=Avg('rating__script'),
-        avg_acting=Avg('rating__acting'),
-        avg_soundtrack=Avg('rating__soundtrack'),
-        avg_overalscore=Avg('rating__overalscore'),
-        avg_bonus=Avg('rating__bonus'),
-        avg_total=Avg(
-            ExpressionWrapper(
-                (F('rating__look') + F('rating__script') + F('rating__acting') + F('rating__soundtrack') + F('rating__overalscore') + F('rating__bonus')) / 5,
-                output_field=FloatField()
-            )
+    # Retrieve ratings for all movies directed by this director
+    ratings = Rating.objects.filter(movie__in=movies).annotate(
+        avg_look=Avg('look'),
+        avg_script=Avg('script'),
+        avg_acting=Avg('acting'),
+        avg_soundtrack=Avg('soundtrack'),
+        avg_overalscore=Avg('overalscore'),
+        avg_bonus=Avg('bonus'),
+        avg_total=ExpressionWrapper(
+            (F('look') + F('script') + F('acting') + F('soundtrack') + F('overalscore') + F('bonus')) / 5,
+            output_field=FloatField()
         )
-    ).values(
-        'id', 'title','poster', 'avg_look', 'avg_script', 'avg_acting', 'avg_soundtrack', 'avg_overalscore','avg_bonus', 'avg_total'
     )
-    print(movie_with_ratings)
 
-    return render(request,'movies/director.html',{"director":director_model,"movies":movie_with_ratings})
+    return render(request,'movies/director.html',{"director":director_model,"ratings":ratings})
+
+@login_required
+def movie(request,movie_id):
+    movie = get_object_or_404(Movie,pk=movie_id)
+    return render(request,'movies/movie.html',{'movie':movie})

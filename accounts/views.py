@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+
+from movies.models import Movie
 from .forms import CustomLoginForm
 from django.contrib import messages
 from .models import Account
@@ -51,6 +53,11 @@ themes = [
 def index(request):
     ratings = Rating.objects.filter(user=request.user,movie__isnull=False).order_by("-overalscore")
     return render(request,'accounts/index.html',{'ratings':ratings})
+
+@login_required
+def movie(request,movie_id):
+    movie = get_object_or_404(Movie,pk=movie_id)
+    return render(request,'accounts/movie.html',{'movie':movie})
 
 @login_required
 def add(request):

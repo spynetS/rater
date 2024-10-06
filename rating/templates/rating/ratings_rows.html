@@ -2,7 +2,11 @@
 <tr class="hover" >
 	<th>{{rating.pk}}</th>
 	<th><img src="{{rating.movie.poster}}" alt="" class="w-12 h-12" /></th>
-	<td>{{rating.movie.title}}</td>
+	<td>
+		<a href="/movie/movie/{{rating.movie.pk}}" class="link">
+			{{rating.movie.title}}
+		</a>
+	</td>
 	<td>
 		<a href="/movie/director/{{rating.movie.director.name}}"
 			class='link'>{{rating.movie.director.name}}</a>
@@ -13,8 +17,12 @@
 	<td>{{rating.soundtrack}}</td>
 	<td>{{rating.bonus}}</td>
 	<td>{{rating.overalscore}}</td>
-	<td class="truncate">{{rating.description}}</td>
+	{% if description %}
+		<td class="truncate">{{rating.description}}</td>
+	{% endif %}
 	<td>{{rating.average}}</td>
-	<td><a href="/account/edit/{{rating.pk}}" class="link link-primary" >Edit</a></td>
+	{% if edit %}
+		<td><a href="/account/edit/{{rating.pk}}" class="link link-primary" >Edit</a></td>
+	{% endif %}
 </tr>
 {% endfor %}
