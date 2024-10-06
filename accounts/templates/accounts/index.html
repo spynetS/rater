@@ -9,7 +9,7 @@
 		<form
 			hx-post="/rating/search/"
 			hx-target="tbody"
-			hx-trigger='input delay:500ms'
+			hx-trigger='input '
 			hx-indicator="#spinner"
 		>
 			{% include "searchbar.html"  %}
@@ -43,84 +43,54 @@
 		{% include "spinner.html" %}
 	</table>
 
-<div class='hidden' >
-  <canvas id="myChart"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-
-
 <script>
 // Function to sort the table by a specific column
 function sortTable(columnIndex) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("myTable");
-    switching = true;
-    dir = "asc"; // Set the sorting direction to ascending initially
+	var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("myTable");
+	switching = true;
+	dir = "asc"; // Set the sorting direction to ascending initially
 
-    // Loop until no switching is needed
-    while (switching) {
-        switching = false;
-        rows = table.rows;
+	// Loop until no switching is needed
+	while (switching) {
+		switching = false;
+		rows = table.rows;
 
-        // Loop through all table rows (except the headers)
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
+		// Loop through all table rows (except the headers)
+		for (i = 1; i < (rows.length - 1); i++) {
+			shouldSwitch = false;
 
-            // Get the two elements to compare, one from current row and the next
-            x = rows[i].getElementsByTagName("TD")[columnIndex];
-            y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+			// Get the two elements to compare, one from current row and the next
+			x = rows[i].getElementsByTagName("TD")[columnIndex];
+			y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
 
-            // Check if the two rows should switch place, based on the direction
-            if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-        }
+			// Check if the two rows should switch place, based on the direction
+			if (dir == "asc") {
+				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+					shouldSwitch = true;
+					break;
+				}
+			} else if (dir == "desc") {
+				if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+					shouldSwitch = true;
+					break;
+				}
+			}
+		}
 
-        if (shouldSwitch) {
-            // If a switch is needed, make the switch and mark switching as done
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchcount++;
-        } else {
-            // If no switching has been done and the direction is "asc", switch to "desc"
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
-    }
+		if (shouldSwitch) {
+			// If a switch is needed, make the switch and mark switching as done
+			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			switching = true;
+			switchcount++;
+		} else {
+			// If no switching has been done and the direction is "asc", switch to "desc"
+			if (switchcount == 0 && dir == "asc") {
+				dir = "desc";
+				switching = true;
+			}
+		}
+	}
 }
 </script>
 

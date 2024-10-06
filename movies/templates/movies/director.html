@@ -36,5 +36,44 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+		<div class='' >
+			<canvas id="myChart"></canvas>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script>
+			function initChart() {
+				const ctx = document.getElementById('myChart');
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: [{% for movie in movies %} "{{ movie.title }}", {% endfor %}],
+						datasets: [{
+							label: 'Ratings for {{director.name}}\'s movies',
+							data: [{% for movie in movies %} {% if movie.avg_total == None %} 0 {% else %} {{ movie.avg_total }} {% endif %}, {% endfor %}],
+							borderWidth: 1
+						}]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			}
+
+			// Run chart initialization on normal page load
+			document.addEventListener("DOMContentLoaded", initChart);
+
+			// Run chart initialization after HTMX content load (hx-boost)
+			document.body.addEventListener("htmx:afterOnLoad", function(evt) {
+				initChart();
+			});
+		</script>
 	</div>
+
 {% endblock %}

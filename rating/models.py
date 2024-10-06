@@ -43,3 +43,6 @@ class Rating(models.Model):
 
         # Calculate the average of non-null scores
         return sum(valid_scores) / (len(valid_scores)-1) # we dont divide with the bonus
+
+    def __str__(self):
+        return self.movie.title if self.movie != None else ""
