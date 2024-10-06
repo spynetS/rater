@@ -3,97 +3,142 @@
 {% block title %} Ratings {% endblock %}
 
 {% block content %}
-<div class="w-full min-h-screen  p-12 flex flex-col" >
 
-	<div class="w-full flex flex-row justify-between" >
-		<form
-			hx-post="/rating/search/"
-			hx-target="tbody"
-			hx-trigger='input '
-			hx-indicator="#spinner"
-		>
-			{% include "searchbar.html"  %}
-		</form>
-		<a href="add" class="btn btn-primary">
-			Add new rating
-		</a>
+<div class="grid grid-cols-2 gap-3  grid-rows-2 w-full min-h-screen  p-12 flex flex-col" >
+	<div class="bg-base-200 rouned-lg p-4 ">
+		<h2 class="text-xl font-bol" >Movie history</h2>
+		<canvas id="historyChart"></canvas>
 	</div>
-	<table id="myTable" class="table table-zebra">
-		<!-- head -->
-		<thead>
-		<tr>
-			<th></th>
-			<th onclick="sortTable(1)" >Poster</th>
-			<th onclick="sortTable(2)" >Movie title</th>
-			<th onclick="sortTable(3)" >Director</th>
-			<th onclick="sortTable(4)" >Look</th>
-			<th onclick="sortTable(5)" >Script</th>
-			<th onclick="sortTable(6)" >Acting</th>
-			<th onclick="sortTable(7)" >Soundtrack</th>
-			<th onclick="sortTable(8)" >Bonus</th>
-			<th onclick="sortTable(9)" >Overalscore</th>
-			<th onclick="sortTable(10)" >Description</th>
-			<th onclick="sortTable(11)">Sum</th>
-			<th onclick="">Edit</th>
-		</tr>
-		</thead>
-		<tbody>
-			{% include "rating/ratings_rows.html" with ratings=ratings edit=True description=True%}
-		</tbody>
-		{% include "spinner.html" %}
-	</table>
 
-<script>
-// Function to sort the table by a specific column
-function sortTable(columnIndex) {
-	var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-	table = document.getElementById("myTable");
-	switching = true;
-	dir = "asc"; // Set the sorting direction to ascending initially
+	<div class="grid grid-cols-2 grid-rows-2 gap-3" >
+		<div class="bg-base-200 rouned-lg p-4 ">
+			<h2 class="text-xl font-bol" >Your top directory</h2>
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+				<div class=" avatar online">
+					<div class="w-16 rounded-full">
+						<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+					</div>
+				</div>
+				</div>
+				<a href="/movie/director/{{user.accounts.all.0.get_top_movies.0.movie.director.name}}"
+				   class="link stat-title">
+					{{user.accounts.all.0.get_top_movies.0.movie.director.name}}
+				</a>
+				<div class="stat-value">{{user.accounts.all.0.get_top_movies.0.movie.director.get_average_director}} / 10</div>
+				<div class="stat-title">Average movie rating</div>
+				<div class="stat-desc text-secondary">Directed registered: {{user.accounts.all.0.get_top_movies.0.movie.director.directed_movies.all|length}}</div>
+			</div>
+		</div>
 
-	// Loop until no switching is needed
-	while (switching) {
-		switching = false;
-		rows = table.rows;
+		<div class="bg-base-200 rouned-lg p-4 ">
+			<h2 class="text-xl font-bol" >Your top Writer</h2>
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+				<div class=" avatar online">
+					<div class="w-16 rounded-full">
+						<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+					</div>
+				</div>
+				</div>
+				<div class="stat-title">{{user.accounts.all.0.get_top_movies.0.movie.writer.name}}</div>
+				<div class="stat-value">{{user.accounts.all.0.get_top_movies.0.movie.writer.get_average_writer}} / 10</div>
+				<div class="stat-title">Average movie rating</div> <div class="stat-desc text-secondary">Written registered: {{user.accounts.all.0.get_top_movies.0.movie.director.directed_movies.all|length}}</div>
+			</div>
+		</div>
 
-		// Loop through all table rows (except the headers)
-		for (i = 1; i < (rows.length - 1); i++) {
-			shouldSwitch = false;
+		<div class="bg-base-200 rouned-lg p-4 ">
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					class="inline-block h-8 w-8 stroke-current">
+					<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+				</svg>
+				</div>
+				<div class="stat-title">Amount of your rated movies</div>
+				<div class="stat-value">{{user.ratings.all|length}}</div>
+				<div class="stat-desc">↗︎ 400 (22%)</div>
+			</div>
+		</div>
 
-			// Get the two elements to compare, one from current row and the next
-			x = rows[i].getElementsByTagName("TD")[columnIndex];
-			y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+		<div class="bg-base-200 rouned-lg p-4 ">
+			<h2 class="text-xl font-bol" >Top Directory</h2>
+			<a href="/movie/director/{{user.accounts.all.0.get_top_director.name}}" class="link">{{user.accounts.all.0.get_top_director.name}}</a>
+		</div>
 
-			// Check if the two rows should switch place, based on the direction
-			if (dir == "asc") {
-				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-					shouldSwitch = true;
-					break;
-				}
-			} else if (dir == "desc") {
-				if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-					shouldSwitch = true;
-					break;
-				}
-			}
-		}
+	</div>
 
-		if (shouldSwitch) {
-			// If a switch is needed, make the switch and mark switching as done
-			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-			switching = true;
-			switchcount++;
-		} else {
-			// If no switching has been done and the direction is "asc", switch to "desc"
-			if (switchcount == 0 && dir == "asc") {
-				dir = "desc";
-				switching = true;
-			}
-		}
-	}
-}
-</script>
+	<div class="bg-base-200 rouned-lg p-4 ">
+		<h2 class="text-xl font-bold mb-5" >Top 3 rated movies</h2>
+		<div class="flex flex-row justify-around" >
+			{% for rating in user.accounts.all.0.get_top_movies %}
+				<a href="/movie/movie/{{rating.movie.pk}}" class="flex flex-col items-center hover:-translate-y-1 duration-100">
+					{% include "movies/poster.html" with movie=rating.movie %}
+					<p>{{rating.average}} / 10</p>
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="bg-base-200 rouned-lg p-4 ">
+	</div>
+
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+	function initChart() {
+		const ctx = document.getElementById('historyChart');
+
+		new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: [{% for rating in ratings %} "{{ rating.movie.title }}", {% endfor %}],
+				datasets: [{
+					label: 'Ratings for {{director.name}}\'s movies',
+					data: [{% for rating in ratings %} {{ rating.average }}, {% endfor %}],
+					borderWidth: 1
+				},
+				{
+					label: 'Ratings for {{director.name}}\'s movies',
+					data: [{% for rating in ratings %} {{ rating.average }}, {% endfor %}],
+					borderWidth: 2
+				}
+				]
+			},
+			options: {
+				animations: {
+					radius: {
+						duration: 400,
+						easing: 'linear',
+						loop: (context) => context.active
+					}
+				},
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				}
+			}
+		});
+	}
+
+	// Run chart initialization on normal page load
+	document.addEventListener("DOMContentLoaded", initChart);
+
+	// Run chart initialization after HTMX content load (hx-boost)
+	document.body.addEventListener("htmx:afterOnLoad", function(evt) {
+		initChart();
+	});
+</script>
+
 
 {% endblock %}

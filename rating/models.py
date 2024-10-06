@@ -20,8 +20,7 @@ class Rating(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # Automatically set at creation
 
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE,null=True)
-
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="ratings")
 
     def save(self, *args, **kwargs):
         # Call the superclass's save method

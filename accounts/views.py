@@ -55,6 +55,11 @@ def index(request):
     return render(request,'accounts/index.html',{'ratings':ratings})
 
 @login_required
+def ratings(request):
+    ratings = Rating.objects.filter(user=request.user,movie__isnull=False).order_by("-overalscore")
+    return render(request,'accounts/ratings.html',{'ratings':ratings})
+
+@login_required
 def movie(request,movie_id):
     movie = get_object_or_404(Movie,pk=movie_id)
     return render(request,'accounts/movie.html',{'movie':movie})
