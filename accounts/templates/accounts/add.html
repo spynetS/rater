@@ -6,11 +6,12 @@
 		<h1 class="text-4xl font-bold" >Add new rating</h1>
 		<div class="bg-base-200 p-12 rounded-lg flex flex-col gap-2" >
 			<div class="" >
-				<form hx-post="/movie/search_api/" hx-trigger="input delay:500ms" hx-target='#holder'>
+				<form hx-post="/movie/search_api/" hx-trigger="input delay:500ms" hx-target='#holder' hx-indicator="#spinner">
 					<h2>Select the movie to be reviews</h2>
 					{% include "searchbar.html" %}
 				</form>
 			</div>
+			{% include "spinner.html" %}
 			<div id="holder" class="flex flex-wrap justify-center h-72 overflow-scroll">
 			</div>
 		</div>

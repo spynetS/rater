@@ -26,6 +26,7 @@ def search_api(request):
         for movie in movies:
             movie['json'] = json.dumps(movie)
         return render(request,'movies/movieslist.html',{'movies':movies})
+    return HttpResponse("No movie with that name was found");
 
 
 @login_required
