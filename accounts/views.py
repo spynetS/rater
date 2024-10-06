@@ -61,6 +61,11 @@ def add(request):
 
     return render(request,"accounts/add.html",{'rating':rating})
 
+@login_required
+def edit(request,rating_id):
+    rating = get_object_or_404(Rating,pk=rating_id)
+    return render(request,"accounts/edit-rating.html",{'rating':rating})
+
 def custom_login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request.POST)

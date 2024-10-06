@@ -2,14 +2,17 @@
 	class="bg-base-200 p-12 grid grid-cols-2 gap-4 rounded-lg"
 	hx-post="/rating/setvalues/{{rating.pk}}/"
 >
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="look"        placeholder="Cinematic look" class="input input-bordered w-full max-w-xs" />
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="script"      placeholder="Script" class="input input-bordered w-full max-w-xs" />
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="acting"      placeholder="Acting" class="input input-bordered w-full max-w-xs" />
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="soundtrack"  placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="bonus" 	  placeholder="Bonus score" class="input input-bordered w-full max-w-xs" />
-	<input {% if rating.movie %}{%else%}disabled{%endif%} name="overalscore" placeholder="The overalscore" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.look}}" {% if rating.movie %}{%else%}disabled{%endif%} name="look"        placeholder="Cinematic look" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.script}}" {% if rating.movie %}{%else%}disabled{%endif%} name="script"      placeholder="Script" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.acting}}" {% if rating.movie %}{%else%}disabled{%endif%} name="acting"      placeholder="Acting" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.soundtrack}}" {% if rating.movie %}{%else%}disabled{%endif%} name="soundtrack"  placeholder="Soundtrack" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.bonus}}" {% if rating.movie %}{%else%}disabled{%endif%} name="bonus" 	  placeholder="Bonus score" class="input input-bordered w-full max-w-xs" />
+	<input type="number" value="{{rating.overalscore}}" {% if rating.movie %}{%else%}disabled{%endif%} name="overalscore" placeholder="The overalscore" class="input input-bordered w-full max-w-xs" />
 
-	<textarea class="textarea textarea-bordered col-span-2" name="description" rows="" cols="" placeholder="Description"></textarea>
+	<textarea class="textarea textarea-bordered col-span-2" name="description" rows="" cols="" placeholder="Description">
+		{{rating.description}}
+	</textarea>
+
 	<input type="submit" value="Submit" class="btn btn-primary col-span-2" />
 
 </form>

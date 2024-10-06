@@ -68,7 +68,7 @@ def director_page(request,director):
         avg_script=Avg('rating__script'),
         avg_acting=Avg('rating__acting'),
         avg_soundtrack=Avg('rating__soundtrack'),
-        avg_overalscore=Avg('rating__overalscore ),
+        avg_overalscore=Avg('rating__overalscore'),
         avg_bonus=Avg('rating__bonus'),
         avg_total=Avg(
             ExpressionWrapper(
