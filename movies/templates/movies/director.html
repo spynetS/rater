@@ -47,7 +47,7 @@
 			function initChart() {
 				const ctx = document.getElementById('myChart');
 				new Chart(ctx, {
-					type: 'bar',
+					type: 'line',
 					data: {
 						labels: [{% for movie in movies %} "{{ movie.title }}", {% endfor %}],
 						datasets: [{
