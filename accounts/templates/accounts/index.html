@@ -12,7 +12,7 @@
 
 	<div class="grid grid-cols-2 grid-rows-2 gap-3" >
 		<div class="bg-base-200 rouned-lg p-4 ">
-			<h2 class="text-xl font-bol" >Your top directory</h2>
+			<h2 class="text-xl font-bol" >Your top director</h2>
 			<div class="stat">
 				<div class="stat-figure text-secondary">
 				<div class=" avatar online">
@@ -21,13 +21,13 @@
 					</div>
 				</div>
 				</div>
-				<a href="/movie/director/{{user.accounts.all.0.get_top_movies.0.movie.director.name}}"
+				<a href="/movie/director/{{user.accounts.all.0.get_top_movies.0.movie.directors.all.0.name}}"
 				   class="link stat-title">
-					{{user.accounts.all.0.get_top_movies.0.movie.director.name}}
+					{{user.accounts.all.0.get_top_movies.0.movie.directors.all.0.name}}
 				</a>
-				<div class="stat-value">{{user.accounts.all.0.get_top_movies.0.movie.director.get_average_director}} / 10</div>
+				<div class="stat-value">{{user.accounts.all.0.get_top_movies.0.movie.directors.all.0.get_average_director}} / 10</div>
 				<div class="stat-title">Average movie rating</div>
-				<div class="stat-desc text-secondary">Directed registered: {{user.accounts.all.0.get_top_movies.0.movie.director.directed_movies.all|length}}</div>
+				<div class="stat-desc text-secondary">Directed registered: {{user.accounts.all.0.get_top_movies.0.movie.directos.all.0.directed_movies.all|length}}</div>
 			</div>
 		</div>
 
@@ -70,7 +70,9 @@
 
 		<div class="bg-base-200 rouned-lg p-4 ">
 			<h2 class="text-xl font-bol" >Top Directory</h2>
+			{% if user.accounts.all.0.get_top_director != None %}
 			<a href="/movie/director/{{user.accounts.all.0.get_top_director.name}}" class="link">{{user.accounts.all.0.get_top_director.name}}</a>
+			{% endif %}
 		</div>
 
 	</div>
@@ -105,13 +107,38 @@
 				datasets: [{
 					label: 'Ratings for {{director.name}}\'s movies',
 					data: [{% for rating in ratings %} {{ rating.average }}, {% endfor %}],
+					borderWidth: 4
+				},
+				{
+					label: 'Look',
+					data: [{% for rating in ratings %} {{ rating.look }}, {% endfor %}],
 					borderWidth: 1
 				},
 				{
-					label: 'Ratings for {{director.name}}\'s movies',
-					data: [{% for rating in ratings %} {{ rating.average }}, {% endfor %}],
-					borderWidth: 2
-				}
+					label: 'Script',
+					data: [{% for rating in ratings %} {{ rating.script }}, {% endfor %}],
+					borderWidth: 1
+				},
+				{
+					label: 'Acting',
+					data: [{% for rating in ratings %} {{ rating.acting }}, {% endfor %}],
+					borderWidth: 1
+				},
+				{
+					label: 'Soundtrack',
+					data: [{% for rating in ratings %} {{ rating.soundtrack }}, {% endfor %}],
+					borderWidth: 1
+				},
+				{
+					label: 'Bonus',
+					data: [{% for rating in ratings %} {{ rating.bonus }}, {% endfor %}],
+					borderWidth: 1
+				},
+				{
+					label: 'Overalscore',
+					data: [{% for rating in ratings %} {{ rating.overalscore }}, {% endfor %}],
+					borderWidth: 1
+				},
 				]
 			},
 			options: {

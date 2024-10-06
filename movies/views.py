@@ -4,13 +4,14 @@ from django.shortcuts import get_object_or_404, render
 import requests
 from datetime import datetime
 import json
+from django.db.models import Avg, F, ExpressionWrapper, FloatField
 
 from rating.views import setmovie
 
 from rating.models import Rating
 # Create your views here.
 
-from movies.models import Movie, Person
+from movies.models import Movie, Person, Category
 
 def search(request):
     movies = Movie.objects.all()
@@ -45,9 +46,6 @@ def register_movie(request,rating_id):
 
 
         director, director_created = Person.objects.get_or_create(name=movie_data["Director"])
-        writer, writer_created = Person.objects.get_or_create(name=movie_data["Writer"])
-
-
 
         movie,movie_created = Movie.objects.get_or_create(
             title=movie_data['Title'],
@@ -55,9 +53,7 @@ def register_movie(request,rating_id):
             release = datetime.strptime(movie_data['Released'],"%d %b %Y"),
             plot = movie_data['Plot'],
             imdbRating = float(movie_data['imdbRating']),
-
-            director = director,
-            writer = writer,
+            imdbID = imdbID
         )
         movie.save()
 
@@ -67,13 +63,31 @@ def register_movie(request,rating_id):
             actor_model, actor_created = Person.objects.get_or_create(name=actor.strip())
             movie.actors.add(actor_model)
 
+        writers = movie_data['Writer'].replace('"',"").split(",")
+        for writer in writers:
+            print(writer.strip())
+            writer_model, writer_created = Person.objects.get_or_create(name=writer.strip())
+            movie.writers.add(writer_model)
+
+        directors = movie_data['Director'].replace('"',"").split(",")
+        for director in directors:
+            print(director.strip())
+            director_model, director_created = Person.objects.get_or_create(name=director.strip())
+            movie.directors.add(director_model)
+
+        genres = movie_data['Genre'].replace('"',"").split(",")
+        for genre in genres:
+            print(genre.strip())
+            category_model, category_created = Category.objects.get_or_create(value=genre.strip())
+            movie.categories.add(category_model)
+
+
         rating.movie = movie
         rating.save()
     response = render(request,"movies/poster.html",{"movie":movie})
     response.headers["HX-Trigger"] = "MovieSelected"
     return response
 
-from django.db.models import Avg, F, ExpressionWrapper, FloatField
 
 def director_page(request,director):
     director_model = get_object_or_404(Person,name=director)

@@ -13,22 +13,34 @@
 					<div class="flex flex-col gap-2" >
 						<div class="grid grid-cols-3">
 							<p>Director:</p>
-							<a href="/movie/director/{{movie.director.name}}" class="link col-span-2" >{{movie.director.name}}</a>
+							<div class="flex flex-col gap-2 col-span-2">
+								{% for director in movie.directors.all %}
+								<a href="/movie/director/{{director.name}}" class="link " >{{director.name}}</a>
+								{% endfor %}
+							</div>
+
 						</div>
 						<div class="grid grid-cols-3">
 							<p>Writer:</p>
-							<a href="/" class="link col-span-2" >{{movie.writer.name}}</a>
+							<div class="flex flex-col gap-2 col-span-2">
+								{% for writer in movie.writers.all %}
+								<a href="/" class="link " >{{writer.name}}</a>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="flex flex-row gap-2">
+							{% for category in movie.categories.all %}
+								<a href="/account/ratings?category={{category.value}}" class="link">{{category.value}},</a>
+							{% endfor %}
 						</div>
 					</div>
 					<div>
 						<div class="mb-2">
 							<p>Average Rating</p>
 							<div class="rating">
-								<input type="radio" name="rating-1" class="mask mask-star" />
-								<input type="radio" name="rating-1" class="mask mask-star" checked="checked" />
-								<input type="radio" name="rating-1" class="mask mask-star" />
-								<input type="radio" name="rating-1" class="mask mask-star" />
-								<input type="radio" name="rating-1" class="mask mask-star" />
+								{% for star in "1234567890" %}
+									{% include 'star.html' with rating=movie.get_average_rating.avg_total index=forloop.counter %}
+								{% endfor %}
 							</div>
 						</div>
 						<p>{{movie.release}}</p>

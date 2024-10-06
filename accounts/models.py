@@ -14,7 +14,8 @@ class Account(models.Model):
 
     def get_top_director(self):
         ratings = self.get_top_movies()
-        return ratings[0].movie.director
+        print(ratings[0].movie.directors.all())
+        return ratings[0].movie.directors.all()[0]
 
 
     def get_top_movies(self):
@@ -24,12 +25,14 @@ class Account(models.Model):
                 (Coalesce(F('look'), 0) +
                 Coalesce(F('script'), 0) +
                 Coalesce(F('acting'), 0) +
-                Coalesce(F('soundtrack'), 0)) / 4,
+                Coalesce(F('overalscore'), 0) +
+                Coalesce(F('bonus'), 0) +
+                Coalesce(F('soundtrack'), 0)) / 5,
                 output_field=FloatField()
             )
         ).order_by('-avg_rating')[:3]
 
-        print(ratings_with_average)
+        print("ratings",ratings_with_average)
 
         return ratings_with_average
 
