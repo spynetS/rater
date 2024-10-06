@@ -19,3 +19,6 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_large_poster(self):
+        return self.poster.replace("300","700")
