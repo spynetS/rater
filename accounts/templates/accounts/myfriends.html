@@ -1,0 +1,47 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+	<div class="overflow-x-auto w-screen p-12">
+		<div role="tablist" class="tabs tabs-lifted">
+			<input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Friends list" checked="checked" />
+			<div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+				<table class="table table-zebra">
+					<!-- head -->
+					<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Job</th>
+						<th>Favorite Color</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for friend in friends.all %}
+						<tr class="hover:bg-base-300" onclick='window.location.href="/account/{{friend.user.username}}"'>
+							<th></th>
+							<td>{{friend.user.username}}</td>
+							<td>
+								<a href="" class='link link-error' >unfriend</a>
+							</td>
+							<td>Red</td>
+						</tr>
+					{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+
+			<input
+				type="radio"
+				name="my_tabs_2"
+				role="tab"
+				class="tab"
+				aria-label="Add friend"
+				/>
+			<div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

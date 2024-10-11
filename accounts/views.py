@@ -48,11 +48,21 @@ themes = [
     "nord",
     "sunset",
 ]
+@login_required
+def myfriends(request):
+    friends = request.user.accounts.all()[0].friends
+    return render(request,'accounts/myfriends.html',{'friends':friends})
 
 @login_required
 def index(request):
     ratings = Rating.objects.filter(user=request.user,movie__isnull=False).order_by("-overalscore")
     return render(request,'accounts/index.html',{'ratings':ratings})
+
+@login_required
+def profile(request,username):
+    from django.contrib.auth.models import User
+    ratings = Rating.objects.filter(user=get_object_or_404(User,username=username),movie__isnull=False).order_by("-overalscore")
+    return render(request,'accounts/ratings.html',{'ratings':ratings})
 
 @login_required
 def ratings(request):
