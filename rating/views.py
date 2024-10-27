@@ -8,6 +8,16 @@ from rating.models import Rating
 
 # Create your views here.
 
+@login_required
+def delete(request,rating_id):
+    rating :Rating = get_object_or_404(Rating,pk=rating_id)
+    try:
+        rating.delete()
+    except:
+        return HttpResponse("Could not delete",status=500)
+    return HttpResponse("Deleted")
+
+@login_required
 def setmovie(request,rating_id,movie_id):
     rating = get_object_or_404(Rating,pk=rating_id)
     rating.movie = get_object_or_404(Movie,pk=movie_id)
