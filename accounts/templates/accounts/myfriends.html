@@ -11,8 +11,7 @@
 					<tr>
 						<th></th>
 						<th>Name</th>
-						<th>Job</th>
-						<th>Favorite Color</th>
+						<th>Name</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -21,12 +20,14 @@
 							<th></th>
 							<td>{{friend.user.username}}</td>
 							<td>
-								<a href="" class='link link-error' >unfriend</a>
+								<button
+									hx-post="/account/removefriend/{{friend.pk}}/"
+									class="btn btn-error btn-sm" >
+									Remove friend
+								</button>
 							</td>
-							<td>Red</td>
 						</tr>
 					{% endfor %}
-
 					</tbody>
 				</table>
 			</div>
@@ -39,7 +40,16 @@
 				aria-label="Add friend"
 				/>
 			<div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+				<form
+					hx-trigger='input delay:500ms'
+					hx-get="/account/searchusers/"
+					hx-target='#holder'>
+					{% include "searchbar.html" %}
+					<input type="submit" name="" value="Submit" class="btn btn-primary" />
+				</form>
+				<div id="holder" >
 
+				</div>
 			</div>
 
 		</div>
