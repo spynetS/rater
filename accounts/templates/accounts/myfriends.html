@@ -39,7 +39,16 @@
 				aria-label="Add friend"
 				/>
 			<div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
+				<form
+					hx-trigger='input delay:500ms'
+					hx-get="/account/searchusers/"
+					hx-target='#holder'>
+					{% include "searchbar.html" %}
+					<input type="submit" name="" value="Submit" class="btn btn-primary" />
+				</form>
+				<div id="holder" >
 
+				</div>
 			</div>
 
 		</div>

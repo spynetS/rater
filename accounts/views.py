@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.views.generic import ListView
 
 from movies.models import Movie
 from .forms import CustomLoginForm
@@ -122,6 +123,24 @@ def signup_view(request):
 
 def settings(request):
     return render(request,"accounts/settings.html",{'themes':themes})
+
+class SearchUsers(ListView):
+    model = Account
+    template_name = 'accounts/account_friends_list.html'  # Specify your template
+    context_object_name = 'accounts'  # Name for the context variable in the template
+
+    def get_queryset(self):
+        # Start with all accounts
+        queryset = super().get_queryset()
+
+        # Check if there is a search query in the POST request
+        search_query = self.request.GET.get('search', None)
+
+        # If a search query is present, filter the queryset
+        if search_query:
+            queryset = queryset.filter(user__username__icontains=search_query)
+
+        return queryset
 
 @login_required
 def settheme(request,account_id):

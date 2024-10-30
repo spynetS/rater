@@ -29,10 +29,11 @@ urlpatterns = [
     path('ratings/', views.ratings),
     path('<str:username>', views.profile),
     path('add', views.add),
+    path('searchusers/', views.SearchUsers.as_view()),
     path('edit/<int:rating_id>', views.edit),
     path('login/', views.custom_login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
-    path('logout', LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('settings', views.settings, name='settings'),
     path('settheme/<int:account_id>/', views.settheme, name='settheme'),
 

@@ -1,0 +1,22 @@
+<ul class='flex flex-col gap-2'>
+	{% for account in accounts %}
+
+		{% if account != user.accounts.all.0 %}
+		<li class="flex flex-row p-5 rounded-lg bg-base-200 justify-between">
+			<a href="" class='link' >{{ account.user.username }}</a>
+			{%  if account in user.accounts.all.0.friends.all %}
+				<button class="btn btn-error" >
+					Remove friend
+				</button>
+			{% else %}
+				<button class="btn btn-primary" >
+					Add friend
+				</button>
+			{% endif %}
+		</li>
+		{% endif %}
+
+	{% empty %}
+		<li>No users are available.</li>
+	{% endfor %}
+</ul>

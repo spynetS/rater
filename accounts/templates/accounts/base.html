@@ -14,7 +14,7 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 
 	</head>
-	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-boost='true'  >
+	<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-boost='false'  >
 		{% block nav %}
 		<div class="flex flex-row relative">
 			<div class="min-w-56 h-screen relative" >
@@ -27,7 +27,7 @@
 						<li><a href='/account/myfriends' >Friends</a></li>
 						<li><a href='/account/settings'>My Account</a></li>
 					</ul>
-					<li><button hx-target="body" hx-post="/account/logout">Logout</button></li>
+					<li><button hx-target="body" hx-post="/account/logout/">Logout</button></li>
 				</ul>
 			</div>
 			{% endblock %}
