@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-20qw*s%qvuhj&a6x9olx((f#5&r@k%85&l_&%#uyyr6dffv!zc
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+APPEND_SLASH = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -45,14 +46,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',  # Handles session data
+    'django.middleware.common.CommonMiddleware',  # Should follow foundational middleware
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database to store session data
 
 # Other optional settings
@@ -134,8 +134,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/account/login'  # Your login page URL
+LOGIN_URL = '/account/login/'  # Your login page URL
 
 LOGIN_REDIRECT_URL = '/account/'  # Redirect after successful login
 LOGOUT_REDIRECT_URL = ''  # Redirect after logout
-LOGOUT_REDIRECT_URL = '/account/login'  # Redirect to the login page or any other page after logout
+LOGOUT_REDIRECT_URL = '/account/login/'  # Redirect to the login page or any other page after logout

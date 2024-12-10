@@ -3,7 +3,7 @@
 
 		{% if account != user.accounts.all.0 %}
 		<li class="flex flex-row p-5 rounded-lg bg-base-200 justify-between">
-			<a href="" class='link' >{{ account.user.username }}</a>
+			<a href="/account/user/{{account.user.username}}" class='link' >{{ account.user.username }}</a>
 			{%  if account in user.accounts.all.0.friends.all %}
 				<button
 					class="btn btn-error" >
