@@ -8,8 +8,14 @@
 			<h2 class="text-xl font-semibold mb-2">Selected movie</h2>
 			{% include "movies/poster.html" with movie=rating.movie %}
 		</div>
-		<div class="bg-base-200 p-12 rounded-lg w-1/2" >
+		<div class="bg-base-200 p-12 rounded-lg w-1/2 " >
 			{% include "rating/values.html" with rating=rating %}
+			<button
+				hx-delete="/rating/delete/{{rating.pk}}/"
+				hx-confirm="Do you really want to remove this rating. This cannot be undone!"
+				class="btn btn-error w-full mt-2" >
+				Remove Rating
+			</button>
 		</div>
 	</div>
 {% endblock %}

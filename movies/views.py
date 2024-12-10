@@ -47,12 +47,17 @@ def register_movie(request,rating_id):
 
         director, director_created = Person.objects.get_or_create(name=movie_data["Director"])
 
+        try:
+            imdbRating = float(movie_data['imdbRating'])
+        except:
+            imdbRating = 0
+
         movie,movie_created = Movie.objects.get_or_create(
             title=movie_data['Title'],
             poster=movie_data['Poster'],
             release = datetime.strptime(movie_data['Released'],"%d %b %Y"),
             plot = movie_data['Plot'],
-            imdbRating = float(movie_data['imdbRating']),
+            imdbRating = imdbRating,
             imdbID = imdbID
         )
         movie.save()
